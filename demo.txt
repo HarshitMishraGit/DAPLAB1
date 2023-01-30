@@ -1,3 +1,521 @@
-helllo enviroment is not supporting bro
+=================DTFT of a signal y[n]=x[n] +0.5 y[n-1] ===============================================================
 
-And now the file has changed
+clc;clear;close all;
+b=input('Enter the cofficient of x[n]');
+a=input('Enter the cofficients of y[n]');
+m=0:length(b)-1; p=0:length(a)-1;
+w=-pi:pi/4:pi;
+num= b* exp(-i*m'*w);
+den= a* exp(-i*p'*w);
+H=num./den;
+
+magH=abs(H); angH=angle(H);
+
+figure;
+
+subplot(211),plot(w,magH);
+xlabel('Frequency in rad '),ylabel('Magnitude Response');
+subplot(212),plot(w,angH);
+xlabel('Frequency in rad'), ylabel('Phase response');
+
+
+=========== DTFT of a sequence h[n] (2b) ===================================================================
+
+n=0:9;
+h=input('enter the input sequence');
+w=-pi:pi/4:pi;
+wn=n'*w;
+minus_jwn=-i*n'*w;
+H=h*exp(minus_jwn);
+magH=abs(H);
+angH=angle(H);
+figure();
+subplot(211),plot(w,magH);
+xlabel('Frequency in rad'),ylabel('Magnitude response');
+subplot(212),plot(w,angH);
+xlabel('Frequency in rad'),ylabel('Phase response');
+
+
+============================ zero padding ===============================================
+
+L=4;
+x-[1 2 3 4];
+X=abs(fft(x));
+x_pd1 =[x,zeros(1,l)];
+x_pd2 = (x,zeros(1,1024));
+X_pd1 = fft(x_pd1);
+X_pd2 =fft(x_pd2);
+figure(2);
+subplot(3,1,1),stem(abs(X)),xlabel('K'),ylabel('X(k)'),title('Spectrum of x[n]');
+subplot(3,1,2),stem(abs(X_pd1)),xlabel('K'),ylabel('X(k)'),title('zero padded spectrum(zeros=length of the sequence');
+subplot(3,1,3),stem(abs(X_pd2)),xlabel('K'),ylabel('X(k)'),title('zero padded spectrum(1024 zeros)');
+
+======================= DFT ===============================================================================
+clc;clear all;close all;
+
+x=input('enter the input sequence values x(n)=');
+N=input('enter the size of DFT=');
+X=fft(x,N)
+Xa=abs(X);
+Xp=angle(X)
+k=0:N-1;
+%w=([0:(N-1)]*2*pi)/N;
+figure(1);
+subplot(411),stem(x),xlabel('n'),ylabel('x(n)'),title('input sequence');
+subplot(412),stem(k,Xa),xlabel('k'),ylabel('|X(k)|'),title('magnitude response');
+subplot(413),stem(k,Xp),xlabel('k'),ylabel('phase of X(k)'),title('phase response');
+x_cap=ifft(X);
+subplot(414),stem(abs(x_cap)),xlabel('n'),ylabel('IDFT of X(k)'),title('Reconstructed sequence');
+
+======================== Effect of repetition ==============================================================
+
+a=[1 2 3 4 ];
+b=[1 2 3 4 1 2 3 4];
+A=abs(fft(a));
+B=abs(fft(b));
+figure(4);subplot(221),stem(a),xlabel('n'),ylabel('x[n'),subplot(223),
+stem(b),xlabel('n'),ylabel('x1[n]'),subplot(222),stem(A),xlabel('k'),
+ylabel('X[k'),subplot(224),stem(B),
+xlabel('k'),ylabel('X1[k]');
+
+============================= Sampling theorem ======================================================================
+
+clc;
+clear;
+close;
+fm=input('fequency');
+fs=input('sampling frequency');
+m=input('number of the cycle');
+t=0.0001:1/fs:m/fm;
+x=3*cos(2*pi*fm*t);
+N=(m*fs/fm);
+k=0:N-1;
+f=k*fs/N;
+figure(1);stem(f,abs(X1));xlabel('fre in hz');ylabel('Mag');
+
+================================ Linear Filtering ===============================================
+
+clc;clear;close all;
+
+x=input('enter the input sequence values x(n)=');
+h=input('enter the input sequence values h(n)=');
+
+L1=length(x);
+L2=length(h);
+%length of linear convolution output
+N=L1+L2-1;
+
+x=[x zeros(1,N-L1)];
+h=[h zeros(1,N-L2)];
+X=fft(x);
+H=fft(h);
+Y=X.*H;
+y=ifft(Y);
+
+subplot(3,1,1);stem(x);xlabel('n'),ylabel('Input Signal x');
+subplot(3,1,2);stem(h);xlabel('n'),ylabel('Impulse Signal');
+subplot(3,1,3);stem(y);xlabel('n'),ylabel('Output Signal');
+
+=========================Circular convolution ==================================
+
+
+clc;clear;close all;
+
+x=input('enter the input sequence values x(n)=');
+h=input('enter the input sequence values h(n)=');
+
+L1=length(x);
+L2=length(h);
+%length of linear convolution output
+N=max(L1,L2);
+
+%x=[x zeros(1,N-L1)];
+%h=[h zeros(1,N-L2)];
+X=fft(x);
+H=fft(h);
+Y=X.*H;
+y=ifft(Y);
+
+subplot(3,1,1);stem(x);xlabel('n'),ylabel('Input Signal x');
+subplot(3,1,2);stem(h);xlabel('n'),ylabel('Impulse Signal');
+subplot(3,1,3);stem(y);xlabel('n'),ylabel('Output Signal');
+
+
+================================== Spectral leakage ================================================
+
+clc;clear;close all;
+fm=input('Enter the frequency of the input signal');
+fs=input('Enter the sampling frequency');
+m=input('Enter the number of cycles of the input signal');
+
+t=0.0001:1/fs:m/fm;
+x=3*cos(2*pi*fm*t);
+N=(m*fs/fm);
+for k=1:N
+ X1(k)=0;
+for n=1:length(x)
+ X1(k)=X1(k)+x(n).*exp((-i).*2.*pi.*(n-1).*(k-1)/N);
+end
+end
+k=0:N-1;
+f=k*fs/N;
+figure(1);stem(abs(X1));xlabel('freq in Hz');ylabel('Mag'),title('spectral leakage');
+figure(2);stem(f,abs(X1));xlabel('freq in Hz');ylabel('Mag'),title('sampling');
+
+
+================= Notch filter ======================================================================
+
+
+clc;clear;close;
+f=input('enter the frequency in hz');
+fs=input('enter the sampling rate');
+r=input('enter the radius of the pole in the z-plane');
+w=2*pi*f/fs;
+z1=exp(i*w);
+z2=exp(-i*w);
+p1=r*exp(i*w);
+p2=r*exp(-i*w);
+z=[z1;z2];
+p=[p1;p2];
+
+b=poly(z);
+a=poly(p);
+freq_rad=-pi:pi/101:pi;
+figure(1);zplane(z,p);
+figure(2);
+H=freqz(b,a,freq_rad);
+freq_Hz=(freq_rad*fs)/(2*pi);
+plot(freq_Hz,abs(H));
+xlabel('Fereq.(Hz)');
+ylabel('Magnitude');
+
+
+=============================== Digital Resonator ===========================================================
+
+clc;clear;close;
+f=input('enter the frequency in hz');
+fs=input('enter the sampling rate');
+r=input('enter the radius of the pole in the z-plane');
+w=2*pi*f/fs;
+z1=exp(i*w);
+z2=exp(-i*w);
+p1=r*exp(i*w);
+p2=r*exp(-i*w);
+z=[z1;z2];
+p=[p1;p2];
+
+b=poly(z);
+a=poly(p);
+freq_rad=-pi:pi/101:pi;
+figure(1);zplane(z,p);
+figure(2);
+H=freqz(b,a,freq_rad);
+freq_Hz=(freq_rad*fs)/(2*pi);
+plot(freq_Hz,abs(H));
+xlabel('Fereq.(Hz)');
+ylabel('Magnitude');
+
+
+
+=========================== Comb filter =================================================================
+
+clear;clc;close all
+fs=500;
+fundamental=50;
+M=(fs/fundamental)
+k=1:M;
+w=2*pi*k/(M);
+z=exp(i*w');
+p=1;
+b=poly(z);
+a=poly(p);
+freq_rad=-pi:pi/101:pi;
+figure(1);zplane(z,p);
+figure(2);
+H=freqz(b,a,freq_rad);
+freq_Hz=(freq_rad*fs)/(2*pi);
+plot(freq_Hz,abs(H));
+xlabel('freq.(Hz)');
+ylabel('Magnitude');
+
+===============================All Pass filter =============================================================
+
+
+------------------- stable causal --------------
+%k= 6   
+clear;clc;close;
+alpha=0.6;
+w= pi*[0:0.001:1];% Normalize frequency
+num=[0 0 0 0 0 0 1];
+den=[1];
+figure ;zplane(num,den);
+h=freqz(num,den,w);
+plot(w,abs(h)); %magnitude response 
+plot(w,angle(h));% Phase response
+
+
+---------------- I roder IIR filter -------------------
+clear;clc;close;
+alpha=0.6;
+w= pi*[0:0.001:1];% Normalize frequency
+num=[alpha 1];
+den=[1 alpha];
+zplane(num,den);
+h=freqz(num,den,w);
+plot(w,abs(h));
+ 
+ 
+=============== All pass 2nd order ========================================
+
+clear;clc;close;
+r=0.9;
+w= pi*[0:0.001:1];% Normalize frequency
+num=[r^2 -2*r*cos(pi/4) 1];
+den=[1 -2*r*cos(pi/4) r^2];
+zplane(num,den);
+h=freqz(num,den,w);
+plot(w,abs(h));
+
+
+================================== Kaiser window ======================================
+
+clear;close;clc;
+%wp=input('enter wp');
+wp=0.2*pi; wc=wp;
+ws=0.3*pi;
+As=50;
+Rp=0.25;
+tr_width=ws-wp;
+N=ceil((As-7.95)/(2.285*tr_width)+1)+1;
+n=0:1:N-1;
+beta=0.1102*(As-8.7);
+fc=wc/pi;
+alpha=(N-1)/2;
+m=n-alpha;
+hd=sin(wc*(n-alpha))./(pi*(n-alpha));%ideal impulse response
+hd(alpha+1)=wc/pi;
+w_kaiser=(kaiser(N,beta))'; % take transpose for multiplication
+h=hd.*w_kaiser;
+subplot(311),stem(n,hd),title('Ideal impulse response');
+xlabel('n'),ylabel('hd(n)');
+subplot(312),stem(n,w_kaiser),title('Kaiser Window');
+xlabel('n'),ylabel('w(n)');
+subplot(313),stem(n,h),title('Actual impulse response');
+xlabel('n'),ylabel('h(n)');
+figure;
+freqz(h,1);%1 is the normalized frequency
+title('Frequency response of the lowpass digital filter');
+
+
+
+============================ Diffrentiator =========================
+clc;clear;close all;
+N=13;
+alpha=(N-1)/2;
+n=0:N-1;
+hd=(cos(pi*(n-alpha)))./(n-alpha);
+hd(alpha+1)=0;
+w_ham=(hamming(N))';
+h=hd.*w_ham;
+subplot(311),stem(n,hd),title('Ideal Impulse Response');
+xlabel('n'),ylabel('hd(n)');
+subplot(312),stem(n,w_ham),title('Hamming window');
+xlabel('n'),ylabel('w(n)');
+subplot(313),stem(n,h),title('Actual Impulse response');
+xlabel('n'),ylabel('h(n)');
+
+freq_rad=-pi:pi/101:pi;
+H=freqz(h,1,freq_rad);
+figure;
+plot(freq_rad,abs(H));
+xlabel('Frequency in pi units'),ylabel('Slope in pi units'),title('Amplitude response');
+
+
+================================ Hilbert transform =========================================
+
+clc;clear;close all;
+N=input('Enter the value of N = ');
+alpha=(N-1)/2;
+n=0:N-1;
+hd=(2/pi)*((sin((pi/2)*(n-alpha)).^2)./(n-alpha));
+hd(alpha+1)=0;
+w_ham=(hanning(N))';
+h=hd.*w_ham;
+subplot(311),stem(n,hd),title('Ideal Impulse Response');
+xlabel('n'),ylabel('hd(n)');
+subplot(312),stem(n,w_ham),title('Hanning window');
+xlabel('n'),ylabel('w(n)');
+subplot(313),stem(n,h),title('Actual Impulse response');
+xlabel('n'),ylabel('h(n)');
+
+freq_rad=-pi:pi/101:pi;
+H=freqz(h,1,freq_rad);
+figure;
+plot(freq_rad,abs(H));
+xlabel('Frequency in pi units'),ylabel('Slope in pi units'),title('Amplitude response');
+
+
+
+============================== Butterworth filter ===================================================
+
+close all;clear;clc;
+fm=1000;
+fs=8000;
+t=0:1/fs:10/fm;
+signal=0.5*sin(2*pi*fm*t);
+noise_comp1=0.5*sin(2*pi*3400*t);
+noise_comp2=0.5*sin(2*pi*3600*t);
+noise_comp3=0.5*sin(2*pi*3800*t);
+noise=noise_comp1+noise_comp2+noise_comp3;
+noisy_signal=signal+noise;
+N=1024; %for DFT 
+
+f1=1500;
+f2=2000;
+k1=-1;
+k2=-3;
+%we can take all the input from the user for all 4 above
+
+k=0:(N/2-1);
+f=k*(fs/N);
+ %specification
+w1=2*pi*f1*1/fs;
+w2=2*pi*f2*1/fs;
+
+%pre warping
+o1=2*fs*tan(w1/2);
+o2=2*fs*tan(w2/2);
+
+%design of analog filter
+
+[n,wn]=buttord(o1,o2,k1,k2,'s');
+[num,den]=butter(n,wn,'s');
+
+%converting analog to digital filter
+[numz,denz]=bilinear(num,den,fs);
+w=2*pi*f/fs;
+h=freqz(numz,denz,w);
+gain1=20*log10(abs(h));
+
+plot(f,gain1),xlabel('Frequency (Hz)');ylabel('Gain(dB');
+title('IIR low-pass filter using butterworth approximation');
+axis([0 fs/2 -inf 0]);
+
+%Filter the noisy signal using the designed filter 
+filtered_signal=filter(numz,denz,noisy_signal);
+
+%plot original ,noisy and filtered signal
+figure(2);
+subplot(311),plot(t,signal);
+title('Original signal');
+subplot(312),plot(t,noisy_signal);
+title('Noisy Signal');
+ylabel('Amplitude');
+subplot(313),plot(t,filtered_signal);
+title('Filtered Signal');
+xlabel('time(sec)');
+
+%computer the fft of the original noisy and filtered signal
+fft1=abs(fft(signal,N));
+fft2=abs(fft(noisy_signal,N));
+fft3=abs(fft(filtered_signal,N));
+
+%plot the spectrum of the original , noisy and the filtered signal 
+figure(3);
+title('IIR LPF using Butterworth approximation');
+subplot(311),plot(f,fft1(1:N/2));
+title('Spectrum of the original signal');
+subplot(312),plot(f,fft2(1:N/2));
+title('Spectrum of the noisy signal');
+subplot(313),plot(f,fft3(1:N/2));
+title('Spectrum of the filtered signal');
+ylabel('Magnitude');
+xlabel('freq(Hz)')
+axis([0 fs/2 -inf inf]);w1 = 2 * fs * tan(w1/2);
+
+
+
+==================================Chebyshev filter ===================================================
+
+close all;clear;clc;
+fm=1000;
+fs=8000;
+t=0:1/fs:10/fm;
+signal=0.5*sin(2*pi*fm*t);
+
+noise_comp1=0.5*sin(2*pi*3400*t);
+noise_comp2=0.5*sin(2*pi*3600*t);
+noise_comp3=0.5*sin(2*pi*3800*t);
+noise=noise_comp1+noise_comp2+noise_comp3;
+noisy_signal=signal+noise;
+N=1024; %for DFT 
+
+f1=1500;
+f2=2000;
+k1=-1;
+k2=-3;
+%we can take all the input from the user for all 4 above
+
+k=0:(N/2-1);
+f=k*(fs/N);
+ %specification
+w1=2*pi*f1*1/fs;
+w2=2*pi*f2*1/fs;
+
+%pre warping
+o1=2*fs*tan(w1/2);
+o2=2*fs*tan(w2/2);
+
+%design of analog filter
+
+[n,wn]=cheb1ord(o1,o2,-k1,k2,'s');
+[num,den]=cheby1(n,-k1,wn,'s');
+
+%converting analog to digital filter
+[numz,denz]=bilinear(num,den,fs);
+w=2*pi*f/fs;
+h=freqz(numz,denz,w);
+gain1=20*log10(abs(h));
+figure;
+plot(f,gain1),xlabel('Frequency (Hz)');ylabel('Gain(dB');
+title('IIR low-pass filter using chebyshev approximation');
+axis([0 fs/2 -inf 0]);
+
+%Filter the noisy signal using the designed filter 
+filtered_signal=filter(numz,denz,noisy_signal);
+
+%plot original ,noisy and filtered signal
+figure(2);
+subplot(311),plot(t,signal);
+title('Original signal');
+subplot(312),plot(t,noisy_signal);
+title('Noisy Signal');
+ylabel('Amplitude');
+subplot(313),plot(t,filtered_signal);
+title('Filtered Signal');
+xlabel('time(sec)');
+
+%computer the fft of the original noisy and filtered signal
+fft1=abs(fft(signal,N));
+fft2=abs(fft(noisy_signal,N));
+fft3=abs(fft(filtered_signal,N));
+
+%plot the spectrum of the original , noisy and the filtered signal 
+figure(3);
+title('IIR LPF using Butterworth approximation');
+subplot(311),plot(f,fft1(1:N/2));
+title('Spectrum of the original signal');
+subplot(312),plot(f,fft2(1:N/2));
+title('Spectrum of the noisy signal');
+subplot(313),plot(f,fft3(1:N/2));
+title('Spectrum of the filtered signal');
+ylabel('Magnitude');
+xlabel('freq(Hz)')
+axis([0 fs/2 -inf inf]);w1 = 2 * fs * tan(w1/2);
+
+
+
+
+
+
+
