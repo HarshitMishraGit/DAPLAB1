@@ -1,0 +1,70 @@
+clear;
+clc;
+close;
+
+P=[1 1 0; 0 1 1; 1 1 1; 1 0 1];
+Message = [1 0 1 1];
+Recd_vector = [1 0 0 1 1 1 1];
+
+syndrome_table=[ 0 0 0
+                 0 0 1
+                 0 1 0
+                 0 1 1
+                 1 0 0 
+                 1 0 1
+                 1 1 0
+                 1 1 1];
+
+k = 4;
+n = 7;
+
+Ik = eye(k, k);
+Inminusk = eye((n-k), (n-k));
+
+G=[P Ik];
+H = [Inminusk P'];
+HT = H';
+for l=1:n 
+    temp(:, l)=Message'.*G(:, l);
+end 
+
+codeword=zeros(1, 7);
+for(l=1:k)
+    codeword = bitxor(codeword, temp(l, :));
+end 
+
+disp(codeword);
+
+for l=1:n-k
+temp_dec(:, l)=Recd_vector'.*HT(:, l);
+end
+
+syndrome=zeros(1, 3);
+for l=1:n
+    syndrome=bitxor(syndrome, temp_dec(l, :));
+end
+
+disp(syndrome);
+
+for r=1:2^(n-k)
+    clmn=1;
+    while clmn<3
+        if(find(syndrome(clmn)==syndrome_table(r, clmn)))
+            clmn=clmn+1;
+            continue;
+        else
+            break;
+        endif
+    end
+
+    if clmn==3
+        error_bit=r;
+    endif
+end
+
+error_pattern=zeros(1, 7);
+if error_bit~=1
+    error_pattern(error_bit-1)=1;
+end
+
+corrected_codeword = bitxor(Recd_vector, error_pattern);
