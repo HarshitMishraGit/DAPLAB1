@@ -1,0 +1,802 @@
+1.Write a C program to get a float value from the user and display it in the below-mentioned format. HINT: Use ceil() and floor() functions from header file. INPUT & OUTPUT FORMAT: Input consists of one float value. Output consists of one integer, its highest round off value and its lowest round off value..
+Input
+Output
+54.5
+54
+55.0
+54.0
+Answer
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+float val;
+float fVal,cVal;
+scanf("%f",&val);
+cVal=ceil(val);
+fVal=floor(val);
+printf("%.f \n%.01f \n%.01f\n",val,cVal,fVal);
+return 0;
+}
+
+=================
+2.Dora is very much interested in gardening and she decides to plant more trees in her garden. She plants trees in the order of rows and columns. She numbered the trees in column wise order. She planted the mango trees only in the second column from both first and last. But later when the trees grew up, she forgot where she planted mango trees. So help her find out whether the given tree number is a number of mango trees or not. Display whether “It is a mango tree” or “It is not a mango tree”. INPUT FORMAT: Input consists of 3 integers. First input corresponds to the number of rows. Second input corresponds to the number of columns. Third input corresponds to the tree number.
+Input
+Output
+5
+5
+20
+It is a mango tree
+#include<stdio.h>
+int main()
+{int a,b,n,c;
+scanf("%d %d %d",&a,&b,&n);
+c=a*b;
+if ((n>=(a+1)&&n<=(2*a))||(n>(c-(2*a))&&n<=(c-a)))
+{
+printf("It is a mango tree");
+}
+else
+{
+printf("It is not a mango tree");
+}
+//fill your code
+}
+
+=============================
+3. Write a C program to check whether the given number is automorphic number or not.
+An automorphic number is a number whose square ends with the number itself. For example, 5 is an automorphic number as 5*5 =25. The last digit is 5 which is the same as the given number. It has only positive single digit numbers. If it is an automorphic number display “Automorphic Number” else display “Not Automorphic Number”.
+Input consists of 1 integer.
+Input
+Output
+a. 7
+Not Automorphic Number
+#include<stdio.h>
+int checkAutomorphic(int num)
+{
+int square = num * num;
+while (num > 0)
+{
+if (num % 10 != square % 10)
+return 0;
+// Reduce N and square
+num = num / 10;
+square = square / 10;
+}
+return 1;
+}
+int main()
+{
+//enter value
+int num;
+scanf("%d",&num);
+//checking condition
+if(checkAutomorphic(num))
+printf("Automorphic Number");
+else
+printf("Not Automorphic Number");
+return 0;
+}
+==========================
+4.Write a C program to find the sum of elements in an array..
+Input
+Output
+a.3
+b.1
+c.2
+d.3
+6
+#include <stdio.h>
+int main()
+{
+int a[1000],i,n,sum=0;
+scanf("%d",&n);
+for(i=0; i<n; i++)
+{
+scanf("%d",&a[i]);
+}
+for(i=0; i<n; i++)
+{
+sum+=a[i];
+}
+printf("%d",sum);
+return 0;
+}
+==============================
+
+5. Write a C program to find whether the given year is a leap year or not.
+FORMAT: Input consist of 1 integer. Output consist of 1 string.
+Input
+Output
+a.2016
+2016 is a leap year
+#include <stdio.h>
+int main() {
+int year;
+scanf(“%d”,&year);
+if (((year % 4 == 0) && (year % 100!= 0)) || (year%400 == 0))
+printf("%d is a leap year", year);
+else
+printf("%d is not a leap year", year);
+return 0;
+}
+===================================
+
+6. Write a OOPS-C++ program to fine a given no is prime or not using class and object. If the number is prime print"Prime" else, print "Not Prime" .
+Input
+Output
+a. 13
+Prime
+#include<iostream>
+using namespace std;
+class sum
+{
+private: int n,i,flag=0;
+public:
+void add()
+{
+cin>>n;
+for (i = 2; i <= n / 2; ++i) {
+// condition for non-prime
+if (n % i == 0) {
+flag = 1;
+break;
+}
+}
+if (n == 1) {
+cout<<"1 is neither prime nor composite.";
+}
+else {
+if (flag == 0)
+cout<<"Prime";
+else
+cout<<"Not Prime";
+}
+}
+};
+int main()
+{
+sum s;
+s.add();
+}
+===================================
+
+7. Write a C program to generate the following series 1, 4, 27, 16, 125….
+Input
+Output
+Enter n value
+5
+1, 4, 27, 16, 125….
+#include<stdio.h>
+#include<math.h>
+int main()
+{
+int a,x,i;
+printf("Enter n value\n");
+scanf("%d",&a);
+for(i=1;i<=a;i++)
+{
+x=pow(i,i);
+printf("%d ",x);
+}
+return 0;
+}
+==============================
+
+8. Write a C++ program to find the multiplication tables of a given number.
+INPUT & OUTPUT FORMAT: Input consists of 2 integers. First input corresponds to the number for which the multiplication tables have to be generated. Second input corresponds to the number until which the tables need to be generated.
+Input
+Output
+a.1
+b.5
+1 * 1 = 1
+1 * 2 = 2
+1 * 3 = 3
+1 * 4 = 4
+1 * 5 = 5
+#include<iostream>
+using namespace std;
+int main()
+{
+int i,a,b;
+cin>>a>>b;
+for(i=1;i<=b;i++)
+{
+Cout<<a<<”*”<<i<<a*I;<<endl
+}
+return 0;
+}
+=========================
+
+9. Write a C++ program to find the sum of first 'n' natural numbers by recursion.
+INPUT & OUTPUT FORMAT: The input corresponds to the value of n. The output corresponds to the sum of the values up to n.
+Input
+Output
+a.5
+15
+#include<stdio.h>
+int sum(int n)
+{
+//fill your code
+if(n!=0)
+return n + sum(n-1);
+else
+return 0;
+}
+int main()
+{
+int n,result;
+scanf("%d",&n);
+result=sum(n);
+printf("%d",result);
+return 0;
+}
+===============================
+
+10. Write a C program to find whether the given two strings are the same or not using string library functions.
+INPUT & OUTPUT FORMAT: Input consists of 2 strings. If two strings are same, display “Strings are same”, else display “Strings are not same”.
+Input
+Output
+a.face
+b.face
+Strings are same
+#include<stdio.h>
+int main()
+{
+//fill your code
+char s1[100];
+char s2[100];
+int f=0;
+scanf("%s",&s1);
+scanf("%s",&s2);
+for(int i=0;s1[i]!='\0'&&s2[i]!='\0';i++){
+if(s1[i]!=s2[i]) {
+f=1;break;
+}
+}
+if(f==0) printf("Strings are same");
+else printf("Strings are not same") ;
+}
+
+==========================
+PART – B 
+===========================
+
+1.Write a C++ program to remove all the characters from the given string that are not alphabet.
+Input
+Output
+pro$#&gra7m
+Program
+#include<stdio.h>
+int main()
+{
+//fill your code
+char s1[100];
+char s2[100];
+int f=0;
+scanf("%s",&s1);
+scanf("%s",&s2);
+for(int i=0;s1[i]!='\0'&&s2[i]!='\0';i++){
+if(s1[i]!=s2[i]) {
+f=1;break;
+}
+}
+if(f==0) printf("Strings are same");
+else printf("Strings are not same") ;
+}
+=====================================
+
+2. Write a C program to find the element of maximum value in each row.
+INPUT & OUTPUT FORMAT: The first input corresponds to the number of rows. The second input corresponds to the number of columns. The third input corresponds to the elements of the 2D array. The output corresponds to the maximum element in each row.
+FUNCTIONAL REQUIREMENTS: int createArray(int,int); int getElements(int**,int,int); void maxElementRow(int**,int,int);
+Input
+Output
+a.3
+b.3
+3 1 5
+5 8 7
+6 4 2
+5
+8
+6
+#include<stdio.h> #include<malloc.h>
+int** create(int m, int n) { int **a, i; a= (int **)malloc(m*sizeof(int *)); for(i=0; i<m; i++) { *(a+i) = (int *)malloc(n*sizeof(int )); } return a; } void read(int **a, int m, int n) { int i, j; for(i=0; i<m; i++) { for(j=0; j<n; j++) { scanf("%d", (*(a+i)+j)); } } }
+void findMax(int** a,int m,int n) { int i,j,max; for(i=0;i<m;i++) { max=-9999; for(j=0;j<n;j++) { if(max < (*(*(a+i)+j))) { max=*(*(a+i)+j); } } printf("%d\n",max); } } int main() { int **a, m, n; scanf("%d",&m); scanf("%d",&n);
+a = create(m,n); read(a,m,n); findMax(a,m,n); return 0; }
+
+======================
+
+3. Write a C program to remove the duplicate elements from an array.
+FUNCTIONAL REQUIREMENTS: void removeDuplicate(int, int *);
+INPUT FORMAT:
+Input consists of 4 integers.
+The first integer corresponds to the size of the array.
+The next three integers correspond to the elements in the array.
+OUTPUT FORMAT:
+The output consists of an array with no duplicate elements.
+Input
+Output
+a. 3
+b.1
+c.5
+d.1
+1
+5 
+#include<stdio.h> int main() { int size; scanf("%d",&size); int a[size],res[size];
+int b[]={0,0,0,0,0,0,0,0,0,0}; for(int i=0;i<size;i++){ scanf("%d",&a[i]); b[a[i]]++; } for(int i=0;i<10;i++){ if(b[i]!=0){ printf("%d\n",i); } } }
+
+================================
+
+4. Write a C++ program to convert a decimal number to a binary number by recursion.
+Input
+Output
+a.10
+1010 #include<stdio.h> int convert(int dec) { if (dec == 0) { return 0;
+} else { return (dec % 2 + 10 * convert(dec / 2)); } } int main() { int dec, bin; scanf("%d",&dec); bin = convert(dec); printf("%d",bin); return 0; }
+
+============================
+
+5. The principal of the college wants to know who got the highest marks this semester. He has to appreciate the students and also wants to offer a free course to that student. The topmost company HR person will conduct the course. He or she can improve technical skills through this course. The duration of the free course is about 3months. In this way, he wants to bring all other students to get the highest marks. The class teachers of each and every class discussed and submit the student's detail to the principal in the paper. Unfortunately, he missed the paper so he needs to automate the process. Can you help him to find the student's details by developing the code in the OOPS-c++
+program.
+Input
+Output
+Kohli
+24
+M
+480
+A
+Enter student's basic information:
+Name:
+Age:
+Gender:
+Enter student's result information:
+Total Marks :
+Grade:
+Name: kohli
+Age: 24
+Gender: M
+Total Marks: 480
+Percentage: 96
+Grade: A
+#include <iostream>
+using namespace std;
+class Student
+{
+public:
+string name,gender,grade;
+int age,tmarks;
+void set(string n,int x, string g,int y,string r)
+{
+cout<<"Enter student's basic information:"<<endl;
+cout<<"Name:"<<endl;
+cout<<"Age:"<<endl;
+cout<<"Gender:"<<endl;
+cin>>n>>x>>g;
+cout<<endl<<"Enter student's result information:"<<endl;
+cout<<"Total Marks:"<<endl;
+cout<<"Grade:"<<endl;
+cin>>y>>r;
+name=n;
+age=x;
+gender=g;
+tmarks= y;
+grade = r;
+}
+};
+class Marks : public Student
+{
+public:
+void display()
+{
+int per=tmarks/5;
+cout<<"Name: "<<name<<endl;
+cout<<"Age: "<<age<<endl;
+cout<<"Gender: "<<gender<<endl;
+cout<<"Total Marks: "<<tmarks<<endl;
+cout<<"Percentage: "<<per<<endl;
+cout<<"Grade: "<<grade<<endl;
+}
+};
+int main()
+{
+Marks m;
+string n,g,r;
+int x,y;
+m.set(n,x,g,y,r);
+m.display();
+return 0;
+}
+
+===========================
+
+6. Write a C program to count the number of elements present in a linked list.
+INPUT & OUTPUT FORMAT: Input consists of a list of integers. -1
+indicates the end of the linked list. Refer to sample input & output for output formatting specifications.
+Input
+Output
+a. 4
+b.3
+c.2
+d.1
+e.-1
+4 3 2 1
+The number of elements are 4.
+#include <iostream>
+using namespace std;
+struct node
+{
+int data;
+struct node *next;
+}*head=0;
+struct node *newnode,*temp;
+void push(int n)
+{
+newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=n;
+newnode->next=0;
+if(head==0)
+{
+head=newnode;
+temp=newnode;
+}
+else
+{
+temp->next=newnode;
+temp=newnode;
+}
+}
+void print()
+{
+int count=0;
+temp=head;
+while(temp!=0)
+{
+count++;
+cout<<temp->data<<" ";
+temp=temp->next;
+}
+cout<<endl<<"The number of students who are present is "<<count<<".";
+}
+int main()
+{
+int n;
+cout<<"The students who are present in the class are\n";
+while(1)
+{
+cin>>n;
+if(n!=-1)
+push(n);
+else
+break;
+}
+print();
+}
+
+==================================
+
+7. Write a C program to push the elements into the stack, pop out all the elements and also display the elements in the stack (Implement this logic using stack using linked list).
+INPUT & OUTPUT FORMAT: Input consists of integers. -1 indicates the end. Refer to sample input & output for output formatting specifications.
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+class Node
+{
+public:
+int data;
+Node *next;
+};
+Node *root = NULL;
+void append(int d)
+{
+Node* newnode = new Node();
+newnode->data = d;
+newnode->next = root;
+root = newnode;
+//return;
+}
+void display()
+{
+Node *temp = root;
+if(temp==NULL)
+{
+cout<<"The contents of the stack are {}";
+}
+else
+{
+cout<<"The contents of the stack are ";
+while (temp != NULL)
+{
+cout<<temp->data<<" ";
+temp = temp->next;
+}
+}
+cout<<endl;
+}
+int delet()
+{
+if(root == NULL)
+{
+cout<<"Stack is empty\n";
+return 0;
+}
+cout<<"The popped element is "<<root->data<<endl;
+root = root->next;
+return 1;
+}
+int main()
+{
+int n,a;
+while(1)
+{
+cout<<"Choice 1 : Push\nChoice 2 : Pop\nChoice 3 : Display\nAny other choice : Exit\n";
+cout<<"Enter your choice\n";
+cin>>n;
+if(n==1)
+{
+cout<<"Enter the element to be pushed\n";
+cin>>a;
+append(a);
+}
+else if(n==2)
+delet();
+else if(n==3)
+display();
+else
+break;
+}
+}
+=================================
+
+8.Write a C program to add the elements into a queue and print the elements in the queue (Implement this logic using the queue using linked list).
+INPUT & OUTPUT FORMAT: Input consists of integers. -1 indicates the end. Refer to sample input & output for output formatting
+specifications.
+Input
+Output
+a.1
+b.2
+c.3
+d.-1
+1
+2
+3
+#include<iostream>
+#include<stdlib.h>
+using namespace std;
+class Node{
+public:
+int data;
+Node *next;
+};
+void append(Node **headadd,int data);
+void display(Node *head);
+int main()
+{
+Node *head=NULL;
+int data;
+do
+{
+cin>>data;
+if(data>0)
+append(&head,data);
+}while(data>0);
+display(head);
+}
+void append(Node **headadd,int data)
+{
+Node *temp,*newnode;
+temp=*headadd;
+newnode=(Node*)malloc(sizeof(Node));
+newnode->data=data;
+newnode->next=NULL;
+if(*headadd==NULL)
+*headadd=newnode;
+else{
+while(temp->next!=NULL){
+temp=temp->next;
+}
+temp->next=newnode;
+}
+}
+void display(Node *head)
+{
+while(head!=NULL)
+{
+cout<<head->data<<" ";
+head = head->next;
+}
+}
+===============================
+
+9.Write a program to obtain the adjacency matrix representation of a graph.
+INPUT & OUTPUT FORMAT: Refer the sample input and output for formatting specifications.
+Input
+Output
+Please enter the number of nodes in the graph
+4
+Adjacency Matrix Representation:
+0 7 0 6
+Please enter the number of edges in the graph
+4
+Is the graph directed no
+Enter the start node, end node and weight of edge no 0
+0 1 7
+Enter the start node, end node and weight of edge no 1
+2 3 5
+Enter the start node, end node and weight of edge no 2
+1 2 3
+Enter the start node, end node and weight of edge
+7 0 3 0
+0 3 0 5
+6 0 5 0
+no 3
+3 0 6
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+int main()
+{
+int **graph,node,edge,f=0,sn,en,we;
+char *dir;
+dir=(char*)malloc(sizeof(char));
+printf("Please enter the number of nodes in the graph\n");
+scanf("%d",&node);
+printf("Please enter the number of edges in the graph\n");
+scanf("%d",&edge);
+graph=(int**)malloc(sizeof(int*)*node);
+for(int i=0;i<node;i++)
+*(graph+i)=(int*)malloc(sizeof(int)*edge);
+printf("Is the graph directed\n");
+scanf("%s",dir);
+if(strcmp(dir,"yes")==0)
+{
+f=1;
+}
+for(int i=0;i<edge;i++){
+printf("Enter the start node, end node and weight of edge no %d\n",i);
+scanf("%d %d %d",&sn,&en,&we);
+graph[sn][en]=we;
+if(f==0)
+graph[en][sn]=we;
+}
+printf("Adjacency Matrix Representation:\n");
+for(int i=0;i<node;i++){
+for(int j=0;j<edge;j++)
+printf("%d ",graph[i][j]);
+printf("\n");}
+return 0;
+}
+
+=======================
+
+10. Implement a C program to construct a Binary Search Tree and also display the elements in the tree using Inorder, Preorder, and Postorder traversals. Binary Search tree is a binary tree in which each internal node x stores an element such that the elements stored in the left subtree of x are less than or equal to x and elements stored in the right subtree of x are greater than or equal to x. This is called binary-search-
+tree property. INPUT & OUTPUT FORMAT: Refer the sample input and output for formatting specifications. [All text in bold corresponds to the output and the rest corresponds to input].
+Input
+Output
+1
+yes
+2
+yes
+Enter the element to be inserted in the tree
+Do you want to insert another element?
+Enter the element to be inserted in the tree
+Do you want to insert another element?
+Enter the element to be inserted in the tree
+3
+yes
+4
+no
+Do you want to insert another element?
+Enter the element to be inserted in the tree
+Do you want to insert another element?
+Inorder Traversal: The elements in the tree are 1 2 3 4
+Preorder Traversal: The elements in the tree are 1 2 3 4
+PostorderTraversal: The elements in the tree are 4 3 2 1
+#include<iostream>
+#include<string.h>
+#include<stdlib.h>
+using namespace std;
+struct btree
+{
+int data;
+struct btree *left;
+struct btree *right;
+};
+struct btree *root,*temp;
+void create(int n)
+{
+temp = (struct btree*)malloc(sizeof(struct btree));
+temp->data = n;
+temp->right = temp->right = NULL;
+}
+void insert(struct btree *t) // 5 8 9 4 6
+{
+if(t->data < temp->data && t->right != NULL)
+{
+insert(t->right);
+}
+else if(t->data < temp->data && t->right == NULL)
+{
+t->right = temp;
+}
+else if(t->data > temp->data && t->left != NULL)
+{
+insert(t->left);
+}
+else if(t->data > temp->data && t->left == NULL)
+{
+t->left = temp;
+}
+}
+void inorder(struct btree *t)
+{
+if(root == NULL)
+{
+cout<<"No element";
+}
+if(t->left!=NULL)
+{
+inorder(t->left);
+}
+cout<<t->data<<" ";
+if(t->right != NULL)
+{
+inorder(t->right);
+}
+}
+void preorder(struct btree *t)
+{
+if(root == NULL)
+{
+cout<<"No element";
+}
+cout<<t->data<<" ";
+if(t->left!=NULL)
+{
+preorder(t->left);
+}
+if(t->right != NULL)
+{
+preorder(t->right);
+}
+}
+void postorder(struct btree * t)
+{
+if(root == NULL)
+{
+cout<<"No element";
+return;
+}
+if(t->left!=NULL)
+postorder(t->left);
+if(t->right != NULL)
+postorder(t->right);
+cout<< t->data<<" ";
+}
+int main()
+{
+int n,input;
+char s[10];
+root = 0;
+while(1)
+{
+cout<<"Enter the element to be inserted in the tree\n";
+cin>>input;
+create(input);
+if(root == NULL)
+root = temp;
+else
+insert(root);
+cout<<"Do you want to insert another element?\n";
+cin>>s;
+if(strcmp(s,"no")==0)
+{
+break;
+}
+}
+cout<<"Inorder Traversal: The elements in the tree are ";
+inorder(root);
+cout<<"\nPreorder Traversal: The elements in the tree are ";
+preorder(root);
+cout<<"\nPostorder Traversal: The elements in the tree are ";
+postorder(root);
+}
